@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.container{
+    background-color: black;
+}
+.container h1{
+    color: white;
+}
+.upload{
+    height: 200px;
+    background-color: #414141;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 100px;
+}
+.upload input{
+    color: #27EECB;
+}
+
+.add-img-btn{
+    cursor: pointer;
+    padding: 25px 91px;
+    background-color: #9292ff;
+    border-radius: 14px;
+    border: none;
+}
+.add-img-btn:hover{
+    background-color: #27EECB;
+    transition: all 0.5s ease-in-out;
+}
+.add-img{
+    text-align: center;
+    margin: 20px 0;
+}
+
+.process{
+    text-align: center;
+}
+.process button{
+    cursor: pointer;
+    margin: 35px 0;
+    border: none;
+    background-color: #27EECB;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+.process button:hover{
+    transition: all 0.5s ease-in-out;
+    background-color: #1C1A5B;
+}
+
+.priview{
+    text-align: center;
+}
+
+.priview button{
+    cursor: pointer;
+    padding: 20px;
+    color: white;
+    border: none;
+    background-color: #1C1A5B;
+    border-radius: 8px;
+}
+
+.priview button:hover{
+    padding: 20px;
+    transition: all 0.5s ease-in-out;
+    color: white;
+    border: none;
+    background-color: #cf9241;
+    border-radius: 8px;
+}
+
+.edited-values{
+    text-align: left;
+    margin: 0 39%;
+    background-color: #414141;
+    color: #27EECB;
+    border-radius: 20px;
+}
+.edited-values p{
+    padding: 10px;
+}
+.dwld-btn{
+    cursor: pointer;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #27EECB;
+    color: white;
+
+}
+.priviewed-images{
+    text-align: center;
+}
+.process div label{
+    color: white;
+}
