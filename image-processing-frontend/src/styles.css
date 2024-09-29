@@ -7,8 +7,25 @@ body {
 }
 .container h1{
     color: white;
+    text-align: center;
+    font-size: xxx-large;
+    padding: 20px 0;
+}
+.container h1 span{
+    color: aqua;
+}
+.justify-content-center .news-adrea{
+    font-size: 16px;
+    background-color: black;
+    color: gray;
+    width: 50%;
+    
+}
+.justify-content-center{
+    height: 300px;
 }
 .upload{
+    border-radius: 50px;
     height: 200px;
     background-color: #414141;
     display: flex;

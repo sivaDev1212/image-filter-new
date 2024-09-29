@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { ImageProvider } from './context/ImageContext'; 
 import ImagePreview from './components/ImagePreview';
+// import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import { InputTextarea } from "primereact/inputtextarea";
+import { Messages } from 'primereact/messages';
+
 
 const App: React.FC = () => {
     const [adjustments, setAdjustments] = useState({
@@ -15,7 +19,9 @@ const App: React.FC = () => {
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [filename, setFilename] = useState<string | null>(null); 
     const [isPreviewReady, setIsPreviewReady] = useState(false);
-
+    const [value, setValue] = useState<string>('-> First upload the image which need to be edited\n-> After uploading you can adjuct the images style\n-> Then you can preview the edited image\n-> If the image is ok to  you then you can download it with the download button');
+    const [imageUploadaed, setImageUploaded] = useState(false);
+ 
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,51 +32,14 @@ const App: React.FC = () => {
         }));
     };
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             setImageFile(file); 
         }
     };
 
-    // const handleSubmit = async () => {
-    //     if (!imageFile) {
-    //         alert("Please upload an image.");
-    //         return;
-    //     }
-
-    //     // Create a FormData object to send image and adjustments to the backend
-    //     // const formData = new FormData();
-    //     // formData.append('image', imageFile);
-    //     // formData.append('brightness', adjustments.brightness.toString());
-    //     // formData.append('contrast', adjustments.contrast.toString());
-    //     // formData.append('saturation', adjustments.saturation.toString());
-    //     // formData.append('rotation', adjustments.rotation.toString());
-
-    //     const formData = {
-    //         filename: imagePath,
-    //         format: 'jpeg',
-    //         brightness: adjustments.brightness.toString(),
-    //         contrast: adjustments.saturation.toString(),
-    //         saturation: adjustments.saturation.toString(),
-    //         rotation: adjustments.rotation.toString()
-    //     };
-    //     console.log("formData",formData);
-
-    //     try {
-    //         const response = await fetch('http://localhost:5000/api/preview', {
-    //             method: 'POST',
-    //             body: JSON.stringify(formData),
-    //         });
-
-    //         const data = await response.json();
-    //         console.log("Preview Image Path: ", data.previewPath);
-           
-    
-    //     } catch (error) {
-    //         console.error("Error uploading image:", error);
-    //     }
-    // };
+   
     const upLoadImg = async () => {
         
         if (!imageFile) {
@@ -87,9 +56,12 @@ const App: React.FC = () => {
             });
 
             const data = await response.json();
-            console.log("Preview Image Path: ", data.filename);
-            
             setImagePath(data.filename);
+            console.log("Preview Image Path: ", data.filename);
+           
+            setImageUploaded(true);
+            
+            
         } catch (error) {
             console.error("Error uploading image:", error);
         }
@@ -135,7 +107,7 @@ const App: React.FC = () => {
             console.error('Error processing image:', error);
         }
     };
-    const handleDownload = async () => {
+    const downloadImage = async () => {
         if (filename) {
             const requestData = {
                 filename: filename
@@ -161,17 +133,17 @@ const App: React.FC = () => {
     return (
         <ImageProvider>
             <div className='container'>
-            <h1>Image Processing Application</h1>
+            <h1>IMAGE <span>EDITOR</span></h1>
 
             <div className=' upload'>
-            <input type="file"  accept="image/png, image/jpeg" onChange={handleImageUpload} />
+            <input type="file"  accept="image/png, image/jpeg" onChange={imageUpload} />
             
             </div>
             <div className='add-img'>
             <button className='add-img-btn' onClick={upLoadImg}>UPLOAD</button>
             </div>
-            <div className='process'>
-            <div>
+            {imageUploadaed && <div className='process'>
+             <div >
                 <label>Brightness</label>
                 <input type="range" name="brightness" min="0" max="2" step="0.1" value={adjustments.brightness} onChange={handleChange} />
 
@@ -186,7 +158,8 @@ const App: React.FC = () => {
             </div>
             <ImagePreview adjustments={adjustments} />
             <button onClick={processImg}>PRIVIEW THE IMAGE</button>
-            </div>
+            </div>}
+            
             
             {/* <div className='priview'>
             <button onClick={handleSubmit}>PRIVIEW THE IMAGE</button>
@@ -197,8 +170,14 @@ const App: React.FC = () => {
                 {previewImage && <img src={previewImage} alt="Processed Image" />}
                 </div>
 
-                {isPreviewReady &&(<button className='dwld-btn' onClick={handleDownload}>Download Processed Image</button>)}
+                {isPreviewReady &&(<button className='dwld-btn' onClick={downloadImage}>Download Processed Image</button>)}
            </div>
+           <div className="card flex justify-content-center">
+            <InputTextarea className='news-adrea' value={value} disabled onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)} rows={5} cols={30} />
+        </div>
+        {/* <div className="card">
+            <Messages ref={imagePath} />
+        </div> */}
             {/* <DownloadButton downloadImgs={downloadImg} /> */}
         </div>
         </ImageProvider>
